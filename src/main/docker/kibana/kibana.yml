@@ -49,18 +49,3 @@ elasticsearch.ssl.verificationMode: none
 
 server.name: kibana
 server.host: "0"
-
-
-ingestion.internalAirflowUrl: http://localhost:8080
-ingestion.externalAirflowUrl: http://localhost:8080
-ingestion.importDagsList: aero_pipe
-ingestion.algoDagsList: aero_pipe
-ingestion.idxprefix: mco
-ingestion.flightDashboardId: 7acbcf00-c4c5-11ea-999f-f9ec22c29d99
-ingestion.physicalArticleDashboardId: c9544540-c4fb-11ea-9164-514750f7b8ae
-ingestion.planeDashboardId: no-data
-ingestion.airfleetDashboardId: no-data
-ingestion.nomenclatureDashboardId: no-data
-ingestion.mcoDeFicheVolVolInfos: b360bdf0-c4c3-11ea-999f-f9ec22c29d99
-ingestion.mcoDeFicheVolK7bVolendo: ca452f60-c4c3-11ea-999f-f9ec22c29d99
-ingestion.notebookUrl: no-data
