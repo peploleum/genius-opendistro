@@ -1,0 +1,65 @@
+version: '2.1'
+services:
+  keycloak:
+    image: jboss/keycloak:4.8.3.Final
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - DB_VENDOR=h2
+      - PROXY_ADDRESS_FORWARDING=true # !Important
+#    expose:
+#      - 8080
+    command:
+      [
+        '-b',
+        '0.0.0.0',
+        '-Djboss.socket.binding.port-offset=1000',
+        '-Dkeycloak.import=/opt/jboss/keycloak/realm-export.json'
+      ]
+    ports:
+      - 9080:9080
+      - 9443:9443
+      - 10990:10990
+    volumes:
+      - ./keycloak/realm-export.json:/opt/jboss/keycloak/realm-export.json
+      - ./nginx/nginx.key:/etc/x509/https/tls.key
+      - ./nginx/nginx.crt:/etc/x509/https/tls.crt
+
+  elasticsearch:
+    image: opendistro-for-elasticsearch-genius:0.10.0
+    environment:
+      - 'ES_JAVA_OPTS=-Xms1024m -Xmx1024m'
+      - 'discovery.type=single-node'
+    ports:
+      - 9200:9200
+      - 9600:9600 # required for Performance Analyzer
+    volumes:
+      - ./elasticsearch-open-distro/log4j2.properties:/usr/share/elasticsearch/config/log4j2.properties
+#      - ./config.yml:/usr/share/elasticsearch/plugins/opendistro_security/securityconfig/config.yml
+      - ./nginx/nginx.crt:/usr/share/elasticsearch/config/ca/keycloak_ca.pem
+    depends_on:
+      - keycloak
+
+  kibana:
+    image: kibana-opendistro-plugin-genius:0.10.0
+    ports:
+      - 5601:5601
+    environment:
+      - ELASTICSEARCH_URL=https://elasticsearch:9200 # https (opendistro) or http (no opendistro)
+      - ELASTICSEARCH_HOSTS=https://elasticsearch:9200 # https (opendistro) or http (no opendistro)
+#      - OPENDISTRO_SECURITY_AUTH_TYPE=openid
+#      - OPENDISTRO_SECURITY_OPENID_CONNECT_URL=http://149.202.78.195:2376/auth/realms/genius/.well-known/openid-configuration
+#      - OPENDISTRO_SECURITY_OPENID_CLIENT_ID=kibana
+#      - OPENDISTRO_SECURITY_CLIENT_SECRET=1db1208c-88e8-4458-b218-00fd4c245405
+      - ELASTICSEARCH_USERNAME=kibanaserver
+      - ELASTICSEARCH_PASSWORD=kibanaserver
+      - ELASTICSEARCH_SSL_VERIFICATIONMODE=none
+      - ELASTICSEARCH_REQUESTHEADERSWHITELIST=["Authorization","securitytenant"]
+      - SERVER_BASEPATH=/genius-kibana
+      - SERVER_REWRITEBASEPATH=true
+    volumes:
+      - ./nginx/nginx.crt:/usr/share/kibana/config/keycloak_ca.pem
+    depends_on:
+      - elasticsearch
+      - keycloak
+

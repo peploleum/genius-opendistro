@@ -1,0 +1,17 @@
+events {
+    worker_connections 1024;
+}
+http {
+    server {
+        listen 2376 ;
+
+        server_name  ns396708;
+
+
+        location /test-tech {
+           access_by_lua_block {
+                ngx.say("test tech")
+           }
+        }
+    }
+}

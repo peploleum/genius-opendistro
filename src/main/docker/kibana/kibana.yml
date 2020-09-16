@@ -1,0 +1,66 @@
+---
+# Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License").
+# You may not use this file except in compliance with the License.
+# A copy of the License is located at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# or in the "license" file accompanying this file. This file is distributed
+# on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+# express or implied. See the License for the specific language governing
+# permissions and limitations under the License.
+
+# Description:
+# Default Kibana configuration from kibana-docker.
+
+
+# Enable OpenID authentication
+opendistro_security.auth.type: "openid"
+
+# The IdP metadata endpoint
+opendistro_security.openid.connect_url: "https://149.202.78.195:2376/auth/realms/genius/.well-known/openid-configuration"
+#opendistro_security.openid.connect_url: "http://www.google.fr"
+
+# The ID of the OpenID Connect client in your IdP
+opendistro_security.openid.client_id: "kibana"
+
+# The client secret of the OpenID Connect client
+opendistro_security.openid.client_secret: "16464887-f69c-4a10-9d1a-1143c3d21e74"
+
+opendistro_security.openid.base_redirect_url: "https://149.202.78.195:2376/"
+opendistro_security.openid.root_ca: "/usr/share/kibana/config/keycloak_ca.pem"
+opendistro_security.openid.verify_hostnames: "false"
+
+opendistro_security.multitenancy.enabled: true
+opendistro_security.multitenancy.tenants.preferred: ["Private", "Global"]
+opendistro_security.readonly_mode.roles: ["kibana_read_only"]
+
+# Use HTTPS instead of HTTP
+elasticsearch.url: "https://149.202.78.195:9200"
+
+# Configure the Kibana internal server user
+elasticsearch.username: "kibanaserver"
+elasticsearch.password: "kibanaserver"
+
+# Disable SSL verification when using self-signed demo certificates
+elasticsearch.ssl.verificationMode: none
+
+server.name: kibana
+server.host: "0"
+
+
+ingestion.internalAirflowUrl: http://localhost:8080
+ingestion.externalAirflowUrl: http://localhost:8080
+ingestion.importDagsList: aero_pipe
+ingestion.algoDagsList: aero_pipe
+ingestion.idxprefix: mco
+ingestion.flightDashboardId: 7acbcf00-c4c5-11ea-999f-f9ec22c29d99
+ingestion.physicalArticleDashboardId: c9544540-c4fb-11ea-9164-514750f7b8ae
+ingestion.planeDashboardId: no-data
+ingestion.airfleetDashboardId: no-data
+ingestion.nomenclatureDashboardId: no-data
+ingestion.mcoDeFicheVolVolInfos: b360bdf0-c4c3-11ea-999f-f9ec22c29d99
+ingestion.mcoDeFicheVolK7bVolendo: ca452f60-c4c3-11ea-999f-f9ec22c29d99
+ingestion.notebookUrl: no-data
