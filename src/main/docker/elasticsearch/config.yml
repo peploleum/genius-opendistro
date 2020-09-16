@@ -96,7 +96,7 @@ opendistro_security:
           challenge: false
           config:
             subject_key: preferred_username
-            openid_connect_url: https://149.202.78.195:9443/auth/realms/genius/.well-known/openid-configuration
+            openid_connect_url: https://149.202.78.195:2376/auth/realms/genius/.well-known/openid-configuration
             openid_connect_idp.enable_ssl: true
             openid_connect_idp.verify_hostnames: false
             openid_connect_idp.pemtrustedcas_filepath: "/usr/share/elasticsearch/config/ca/keycloak_ca.pem"
