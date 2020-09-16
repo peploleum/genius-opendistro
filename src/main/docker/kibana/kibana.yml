@@ -27,7 +27,7 @@ opendistro_security.openid.connect_url: "https://149.202.78.195:2376/auth/realms
 opendistro_security.openid.client_id: "kibana"
 
 # The client secret of the OpenID Connect client
-opendistro_security.openid.client_secret: "16464887-f69c-4a10-9d1a-1143c3d21e74"
+opendistro_security.openid.client_secret: "0d5e1515-d669-4f5a-9839-f0ff5db43188"
 
 opendistro_security.openid.base_redirect_url: "https://149.202.78.195:2376/"
 opendistro_security.openid.root_ca: "/usr/share/kibana/config/keycloak_ca.pem"
